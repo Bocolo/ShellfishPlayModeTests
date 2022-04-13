@@ -107,52 +107,5 @@ public class MenuTest
         yield return null;
         Assert.AreEqual(6, SceneManager.GetActiveScene().buildIndex);
     }
-   /* [UnityTest]
-    public IEnumerator ReturnToMenu_SceneZero()
-    {
-        menu.SubmitPage();
-        yield return null;
-        Assert.AreEqual(1, SceneManager.GetActiveScene().buildIndex);
-
-        backToMenu.ReturnToMenu();
-        yield return null;
-        Assert.AreEqual(0, SceneManager.GetActiveScene().buildIndex);
-
-    }*/
-      /* [UnityTest]
-        public IEnumerator LoadedSceneIs_RetrievalPage()
-        {
-        //temp test, works while logged in
-            menu.RetrievalPage();
-            yield return null;
-            Assert.AreEqual(2, SceneManager.GetActiveScene().buildIndex);
-        }*/
+//retrieval page test required
 }
-
-/*
-[UnitySetUp]
-public IEnumerator SetUp()
-{
-    SceneManager.LoadScene(0);
-    yield return null;
-    *//* try
-     {*//*
-    manager = GameObject.Find("Managers/MenuManager");
-    //  Assert.That(manager, Is.Not.Null);
-    *//*  }
-      catch (Exception e)
-      {*//*
-    //   Debug.Log("Exception caught in menu test- manager retrieval: " + e.Message);
-    // }
-    yield return null;
-    *//*  try
-      {*//*
-    menu = manager.GetComponent<Menu>();
-    //  }
-    // catch (Exception e)
-    //  {
-    //    Debug.Log("Exception caught in menu test-menu retrieval: " + e.Message);
-    //    }
-    yield return null;
-
-}*/

@@ -25,17 +25,7 @@ public class SubmitSampleManagerTest
         yield return null;
 
     }
-   /* [Test]
-    public void Upload_Sample_Test()
-    {
 
-    }
-    [Test]
-    public void Store_Sample_Test()
-    {
-        SceneManager.LoadScene(1);
-       // yield return null;
-    }*/
     [Test]
     public void Submit_And_Save_Sample_Test()
     {
