@@ -9,7 +9,6 @@ using TMPro;
 
 public class PopUpTest
 {
-    private Menu menu;
     private GameObject manager;
     private PopUp popup;
   // private GameObject popUp;
@@ -20,8 +19,6 @@ public class PopUpTest
         yield return null;
         manager = GameObject.Find("Managers/MenuManager");
 
-        yield return null;
-        menu = manager.GetComponent<Menu>();
         yield return null;
         GameObject popUpGO = GameObject.Find("Canvas_Menu/Panel/Container/Pop_UP_Object");
         popup = popUpGO.GetComponent<PopUp>();
@@ -46,7 +43,7 @@ public class PopUpTest
         TMP_Text text = popup.GetComponentInChildren<TMP_Text>();
         Assert.IsNotNull(text);
         Assert.AreEqual("\n\nPop Up Text", text.text); 
-        Assert.AreNotEqual("\n\nPop Up Pop Text", text.text);
+        Assert.AreNotEqual("\n\nPop Up Pop Text", text.text);//review this test in edit modse
 
     }
     [Test]

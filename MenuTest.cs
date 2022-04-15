@@ -6,20 +6,16 @@ using UI.Navigation;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;
-
+/// <summary>
+/// Tests the Menu Class and BackToMenu class
+/// </summary>
 public class MenuTest
 {
     private Menu menu;
     private BackToMenu backToMenu;
     private GameObject manager;
     /// <summary>
-    /// There is a problem with playmode tests and the IEnum setUp
-    /// Each test run individually passes but run in a batch, all but one
-    /// will fail.
-    /// Suspect due to the way the SetUp works.  Look into this
-    /// KNOWN ISSUE : https://forum.unity.com/threads/running-tests-consecutively.781847/
-    /// 
-    /// issue arrises from dont destroy on load child obejct calling the firebase init
+    /// Setting up the unity scene and accessing the relevant Game Objects and components
     /// </summary>
     /// <returns></returns>
 
@@ -35,12 +31,10 @@ public class MenuTest
         yield return null;
 
     }
-    [TearDown]
-    public void Teardown()
-    {
- /*       GameObject.Destroy(menu);
-        GameObject.Destroy(manager);*/
-    }
+    /// <summary>
+    /// Tests back to menu functionality
+    /// </summary>
+    /// <returns></returns>
     [UnityTest]
     public IEnumerator BackToMenuTest()
     {
@@ -53,6 +47,10 @@ public class MenuTest
         yield return null;
         Assert.AreEqual(0, SceneManager.GetActiveScene().buildIndex);
     }
+    /// <summary>
+    /// tests loaded scene
+    /// </summary>
+    /// <returns></returns>
     [UnityTest]
     public IEnumerator LoadedSceneIsZero()
     {
@@ -62,6 +60,10 @@ public class MenuTest
         Assert.AreEqual(0, SceneManager.GetActiveScene().buildIndex);
 
     }
+    /// <summary>
+    /// tests logout method
+    /// </summary>
+    /// <returns></returns>
     [UnityTest]
     public IEnumerator Logout()
     {
@@ -71,6 +73,10 @@ public class MenuTest
         Assert.AreEqual(null, SaveData.Instance.LoadUserProfile().Name);
 
     }
+    /// <summary>
+    /// tests SubmitPage method
+    /// </summary>
+    /// <returns></returns>
     [UnityTest]
     public IEnumerator LoadedSceneIs_SubmitPage()
     {
@@ -79,6 +85,10 @@ public class MenuTest
         yield return null;
         Assert.AreEqual(1, SceneManager.GetActiveScene().buildIndex);
     }
+    /// <summary>
+    /// tests UserSamplesPage method
+    /// </summary>
+    /// <returns></returns>
     [UnityTest]
     public IEnumerator LoadedSceneIs_UserSamplesPage()
     {
@@ -86,6 +96,10 @@ public class MenuTest
         yield return null;
         Assert.AreEqual(3, SceneManager.GetActiveScene().buildIndex);
     }
+    /// <summary>
+    /// tests  menu.ProfilePage method
+    /// </summary>
+    /// <returns></returns>
     [UnityTest]
     public IEnumerator LoadedSceneIs_ProfilePage()
     {
@@ -93,6 +107,10 @@ public class MenuTest
         yield return null;
         Assert.AreEqual(4, SceneManager.GetActiveScene().buildIndex);
     }
+    /// <summary>
+    /// tests menu.LoginPage method
+    /// </summary>
+    /// <returns></returns>
     [UnityTest]
     public IEnumerator LoadedSceneIs_LoginPage()
     {
@@ -100,6 +118,10 @@ public class MenuTest
         yield return null;
         Assert.AreEqual(5, SceneManager.GetActiveScene().buildIndex);
     }
+    /// <summary>
+    /// tests  menu.HelpPage method
+    /// </summary>
+    /// <returns></returns>
     [UnityTest]
     public IEnumerator LoadedSceneIs_HelpPage()
     {

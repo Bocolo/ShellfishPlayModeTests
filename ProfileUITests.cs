@@ -33,12 +33,12 @@ public class ProfileUITests
         profileUI = manager.GetComponent<ProfileUI>();
      
         yield return null;
-
-        profile = GameObject.Find("Canvas_Profile/Panel_Group_Form/Panel_Main/Scroll_View/Viewport/Content/Panel/Inputs/ProfileDetails/Profile_Text");
-        name = GameObject.Find("Canvas_Profile/Panel_Group_Form/Panel_Main/Scroll_View/Viewport/Content/Panel/Inputs/Name_input");
-        company = GameObject.Find("Canvas_Profile/Panel_Group_Form/Panel_Main/Scroll_View/Viewport/Content/Panel/Inputs/Company_input");
-        saveButton = GameObject.Find("Canvas_Profile/Panel_Group_Form/Panel_Main/Scroll_View/Viewport/Content/Panel/Buttons/Save_Profile");
-        updateButton = GameObject.Find("Canvas_Profile/Panel_Group_Form/Panel_Main/Scroll_View/Viewport/Content/Panel/Buttons/Update_Profile");
+        ///Inelegant method of retrieval of gameObjects but useable for play mode tests
+        profile = GameObject.Find("Canvas_Profile/Panel_Main/Scroll_View/Viewport/Content/Panel/Inputs/ProfileDetails/Profile_Text");
+        name = GameObject.Find("Canvas_Profile/Panel_Main/Scroll_View/Viewport/Content/Panel/Inputs/Name_input");
+        company = GameObject.Find("Canvas_Profile/Panel_Main/Scroll_View/Viewport/Content/Panel/Inputs/Company_input");
+        saveButton = GameObject.Find("Canvas_Profile/Panel_Main/Scroll_View/Viewport/Content/Panel/Buttons/Save_Profile");
+        updateButton = GameObject.Find("Canvas_Profile/Panel_Main/Scroll_View/Viewport/Content/Panel/Buttons/UpdateButton/Update_Profile");
    
     }
     [Test]
