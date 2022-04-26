@@ -45,8 +45,7 @@ public class ProfileUITests
     public void SaveProfile_User_Test()
     {
         menu = manager.AddComponent<Menu>();
-
-        menu.LogOut();//prevent testing the firebase auth avenue
+        menu.LogOut();
         _userNameInput = name.GetComponent<TMP_InputField>();
         _companyInput = company.GetComponent<TMP_InputField>();
         string nameText = "SaveProfile Test Name"; ;
@@ -62,9 +61,7 @@ public class ProfileUITests
     public void SaveProfile_View_Test()
     {
         menu = manager.AddComponent<Menu>();
-
-        menu.LogOut();//prevent testing the firebase auth avenue
-
+        menu.LogOut();
         profileUI.SaveProfile();
 
         Assert.IsTrue(profile.activeInHierarchy);

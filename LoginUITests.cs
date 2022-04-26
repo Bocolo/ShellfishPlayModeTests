@@ -11,7 +11,7 @@ using UnityEngine.UI;
 
 public class LoginUITests
 {
-    private LogInOutButtonManager logInOutButtonManager;
+    private LoginUIManager logInOutButtonManager;
     private Menu menu;
     private GameObject manager;
     private GameObject loginGO;
@@ -38,7 +38,7 @@ public class LoginUITests
         yield return null;
         loginButton = loginGO.GetComponent<Button>();
         logoutButton = logoutGO.GetComponent<Button>();
-        logInOutButtonManager = manager.GetComponent<LogInOutButtonManager>();
+        logInOutButtonManager = manager.GetComponent<LoginUIManager>();
         menu = manager.GetComponent<Menu>();
     }
     /// <summary>
@@ -47,8 +47,7 @@ public class LoginUITests
     [Test]
     public void General()
     {
-        // FirebaseAuth.DefaultInstance.CurrentUser != null;
-        //  logInOutButtonManager.IsLoggedIn = false;
+
         SceneManager.LoadScene(0);
         if (appManager.IsLoggedInDB())
         {

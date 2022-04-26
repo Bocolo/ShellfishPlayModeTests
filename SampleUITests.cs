@@ -52,14 +52,19 @@ public class SampleUITests
         samples.Add(new Sample());
         samples.Add(new Sample());
         Assert.AreEqual(0, contentParent.transform.childCount);
+
+        //Adding the 3 above Samples / Children to the "contentParent"
         sampleUI.AddTextAndPrefab(samples);
         Assert.AreEqual(3, contentParent.transform.childCount);
 
         List<Sample> samples2 = new List<Sample>();
         samples2.Add(new Sample());
         samples2.Add(new Sample());
+        //adding the 2 samples from samples2 to the "contentParent"
+        //AddTextAndPrefab should destroy the previous 3 children
         sampleUI.AddTextAndPrefab(samples2);
         yield return null;//wait for next frame
+
         Assert.AreEqual(2, contentParent.transform.childCount);
     }
     [Test]

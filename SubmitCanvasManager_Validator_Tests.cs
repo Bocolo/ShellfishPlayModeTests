@@ -39,33 +39,11 @@ public class SubmitCanvasManager_Validator_Tests
         submitCanvasManager = submitManager.GetComponent<SubmitCanvasManager>();
         sampleValidator = submitManager.GetComponent<SampleValidator>();
 
-
-    }
-    [UnitySetUp]
-    public IEnumerator SetUp_FindGOs()
-    {
         yield return null;
-       try
-        {
-            Debug.Log("In the try");
-            largeCanvas = GameObject.FindWithTag("LargeCanvas"); //will throw Unityexception if inactive
-       
-            submitCanvasManager.SwitchCanvas();
-            smallCanvas = GameObject.FindWithTag("SmallCanvas");
-      
-        }
-        catch (Exception exception)
-        {
-            Debug.Log("Unity exception thrown, large canvas is deactivated: " + exception.Message);
-            smallCanvas = GameObject.FindWithTag("SmallCanvas");
-        
-            submitCanvasManager.SwitchCanvas();
-
-            largeCanvas = GameObject.FindWithTag("LargeCanvas");
-        }
-        yield return null;
-
+        smallCanvas = submitCanvasManager.GetSmallCanvas();
+        largeCanvas = submitCanvasManager.GetLargeCanvas();
     }
+   
 
     /// <summary>
     /// could i just dow 
@@ -83,7 +61,7 @@ public class SubmitCanvasManager_Validator_Tests
         submitCanvasManager.MonthDrop.value = 1;
         submitCanvasManager.YearDrop.value = 1;
         submitCanvasManager.IceRectangle.value = 6;
-          submitCanvasManager.SampleLocationName.value = 7;
+        submitCanvasManager.SampleLocationName.value = 7;
    
         sampleValidator.ValidateValues();
         Sample sample = sampleValidator.NewSample();
@@ -92,11 +70,12 @@ public class SubmitCanvasManager_Validator_Tests
         Assert.AreEqual("Test A Small Comment", sample.Comment);
         Assert.AreEqual("2022-1-1", sample.Date);
         Assert.AreEqual(1, sample.ProductionWeekNo);
+        Assert.AreEqual("Mermaid Shoal Ground (39-E4)",sample.IcesRectangleNo);
+        Assert.AreEqual("Carpet Shell",sample.Species);
     }
     [Test]
-    public void SampleValidator_New_Validator_True()
+    public void SampleValidator_Value_Validator_True()
     {
-
         submitCanvasManager.Name.text = "Test Small Name";
         submitCanvasManager.Company.text = "Test Small Company";
         submitCanvasManager.Comments.text = "Test A Small Comment";
@@ -108,10 +87,9 @@ public class SubmitCanvasManager_Validator_Tests
         submitCanvasManager.IceRectangle.value = 6;
         submitCanvasManager.SampleLocationName.value = 0;
         Assert.IsTrue(sampleValidator.ValidateValues());
-
     }
     [Test]
-    public void SampleValidator_New_Validator_False()
+    public void SampleValidator_Value_Validator_Incorrect_Location_False()
     {
    
         submitCanvasManager.Name.text = "Test Small Name";
@@ -122,8 +100,30 @@ public class SubmitCanvasManager_Validator_Tests
         submitCanvasManager.DayDrop.value = 1;
         submitCanvasManager.MonthDrop.value = 1;
         submitCanvasManager.YearDrop.value = 1;
+        //Validation will fail if one of the below values is not set to zero
+        //Both the ices rectangle and sample location can not be set simultaneously
         submitCanvasManager.IceRectangle.value = 6;
         submitCanvasManager.SampleLocationName.value = 7;
+        Assert.IsFalse(sampleValidator.ValidateValues());
+
+    }
+    [Test]
+    public void SampleValidator_Value_Validator_Invalid_Date_False()
+    {
+
+        submitCanvasManager.Name.text = "Test Small Name";
+        submitCanvasManager.Company.text = "Test Small Company";
+        submitCanvasManager.Comments.text = "Test A Small Comment";
+        submitCanvasManager.ProductionWk.value = 1;
+        submitCanvasManager.Species.value = 2;
+        //Validation will fail if the date is not set correctly
+        //This includes the day,month and year drops
+        submitCanvasManager.DayDrop.value = 0;
+        submitCanvasManager.MonthDrop.value = 0;
+        submitCanvasManager.YearDrop.value = 0;
+ 
+        submitCanvasManager.IceRectangle.value = 6;
+        submitCanvasManager.SampleLocationName.value = 0;
         Assert.IsFalse(sampleValidator.ValidateValues());
 
     }
@@ -146,7 +146,6 @@ public class SubmitCanvasManager_Validator_Tests
             Assert.IsFalse(largeCanvas.activeInHierarchy);
             Assert.IsTrue(smallCanvas.activeInHierarchy);
         }
-
     }
   
     [Test]
@@ -175,7 +174,7 @@ public class SubmitCanvasManager_Validator_Tests
 
     }
     [Test]
-    public void SubmitCanvasManager_TestInput_GenericClear_Submission()
+    public void SubmitCanvasManager_TestInput_Generic_Clear_Submission()
     {
         SaveData.Instance.SaveUserProfile(new User
         {
@@ -208,7 +207,7 @@ public class SubmitCanvasManager_Validator_Tests
 
     }
     [Test]
-    public void SubmitCanvasManager_TestInput_GenericClear_Store()
+    public void SubmitCanvasManager_TestInput_Generic_Clear_Store()
     {
         SaveData.Instance.SaveUserProfile(new User
         {

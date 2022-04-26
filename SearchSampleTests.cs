@@ -39,14 +39,13 @@ public class SearchSampleTests
     {
         searchSampleUI.SetSearchValues();
         Assert.AreEqual("", searchSampleUI.SearchNameSelection);
-        Assert.AreEqual(0, searchSampleUI.SearchLimitSelection);
+        Assert.AreEqual(100, searchSampleUI.SearchLimitSelection);
         Assert.AreEqual("", searchSampleUI.SearchFieldSelection);
     }
  
     [Test]
     public void SetNameValue_Test()
     {
-
         searchInput.text = "Name Text";
         searchSampleUI.SetSearchValues();
         Assert.AreEqual("Name Text", searchSampleUI.SearchNameSelection);
@@ -82,7 +81,6 @@ public class SearchSampleTests
     [Test]
     public void SetSearchField_Test_2()
     {
-
         searchFieldDropDown.value = 2;
         searchSampleUI.SetSearchValues();
         Assert.AreEqual("Company", searchSampleUI.SearchFieldSelection);
@@ -91,7 +89,6 @@ public class SearchSampleTests
     [Test]
     public void SetSearchField_Test_3()
     {
-
         searchFieldDropDown.value = 3;
         searchSampleUI.SetSearchValues();
         Assert.AreEqual("Species", searchSampleUI.SearchFieldSelection);

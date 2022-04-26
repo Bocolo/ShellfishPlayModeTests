@@ -25,7 +25,6 @@ public class MenuTest
         SceneManager.LoadScene(0);
         yield return null;
         manager = GameObject.Find("Managers/MenuManager");
-      
         yield return null;
         menu = manager.GetComponent<Menu>();
         yield return null;
@@ -51,24 +50,20 @@ public class MenuTest
     /// tests loaded scene
     /// </summary>
     /// <returns></returns>
-    [UnityTest]
-    public IEnumerator LoadedSceneIsZero()
+    [Test]
+    public void LoadedSceneIsZero()
     {
-
-        yield return null;
-
         Assert.AreEqual(0, SceneManager.GetActiveScene().buildIndex);
-
     }
     /// <summary>
     /// tests logout method
     /// </summary>
     /// <returns></returns>
-    [UnityTest]
-    public IEnumerator Logout()
+    [Test]
+    public void Logout()
     {
 
-        yield return null;
+   //     yield return null;
         menu.LogOut();
         Assert.AreEqual(null, SaveData.Instance.LoadUserProfile().Name);
 
@@ -80,7 +75,6 @@ public class MenuTest
     [UnityTest]
     public IEnumerator LoadedSceneIs_SubmitPage()
     {
-
         menu.SubmitPage();
         yield return null;
         Assert.AreEqual(1, SceneManager.GetActiveScene().buildIndex);
