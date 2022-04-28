@@ -1,7 +1,6 @@
 using NUnit.Framework;
 using System.Collections;
 using TMPro;
-using UI.Navigation;
 using UI.Retrieve;
 using UnityEngine;
 using UnityEngine.SceneManagement;

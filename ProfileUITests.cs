@@ -10,7 +10,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;
 public class ProfileUITests
 {
-    private ProfileUI profileUI;
+    private ProfileManager profileManager;
     private Menu menu;
     private GameObject manager;
     private GameObject profile;
@@ -30,7 +30,7 @@ public class ProfileUITests
         manager = GameObject.Find("Core/ProfileManager");
 
         yield return null;
-        profileUI = manager.GetComponent<ProfileUI>();
+        profileManager = manager.GetComponent<ProfileManager>();
      
         yield return null;
         ///Inelegant method of retrieval of gameObjects but useable for play mode tests
@@ -52,7 +52,7 @@ public class ProfileUITests
         string companyText = "SaveProfile Test Company";
         _userNameInput.text = nameText;
         _companyInput.text = companyText;
-        profileUI.SaveProfile();
+        profileManager.SaveProfile();
         Assert.AreEqual(nameText, SaveData.Instance.LoadUserProfile().Name);
         Assert.AreEqual(companyText, SaveData.Instance.LoadUserProfile().Company);
 
@@ -60,21 +60,18 @@ public class ProfileUITests
     [Test]
     public void SaveProfile_View_Test()
     {
-        menu = manager.AddComponent<Menu>();
-        menu.LogOut();
-        profileUI.SaveProfile();
+        profileManager.SaveProfile();
 
         Assert.IsTrue(profile.activeInHierarchy);
         Assert.IsTrue(updateButton.activeInHierarchy);
         Assert.IsFalse(name.activeInHierarchy);
         Assert.IsFalse(company.activeInHierarchy);
         Assert.IsFalse(saveButton.activeInHierarchy);
-
     }
     [Test]
     public void UpdateProfile_View_Test()
     {
-        profileUI.GoToUpdateProfile();
+        profileManager.GoToUpdateProfile();
         Assert.IsFalse(profile.activeInHierarchy);
         Assert.IsFalse(updateButton.activeInHierarchy);
         Assert.IsTrue(name.activeInHierarchy);
