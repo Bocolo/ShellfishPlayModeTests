@@ -9,12 +9,11 @@ using UnityEngine.TestTools;
 /// <summary>
 /// Tests te sample UI script
 /// </summary>
-public class SampleUITests
+public class SamplePanelGeneratorTests
 {
-    private SampleUI sampleUI;
+    private SamplePanelGenerator _samplePanelGenerator;
     private GameObject manager;
     private GameObject contentParent;
-    private Transform contentParentTransform;
     [UnitySetUp]
     public IEnumerator SetUp()
     {
@@ -24,7 +23,7 @@ public class SampleUITests
         manager = GameObject.Find("Core/RetrieveManager");
 
         yield return null;
-        sampleUI = manager.GetComponent<SampleUI>();
+        _samplePanelGenerator = manager.GetComponent<SamplePanelGenerator>();
         yield return null;
       contentParent=  GameObject.Find("Canvas_UserSamples/Panel_Scroll/Scroll_View/Viewport/Content");
     }
@@ -36,7 +35,7 @@ public class SampleUITests
     public void SingleSample_TextAndPrefab_PrefabTest()
     {
         Assert.AreEqual(0,contentParent.transform.childCount);
-        sampleUI.AddTextAndPrefab(new Sample());
+        _samplePanelGenerator.AddTextAndPrefab(new Sample());
         Assert.AreEqual(1, contentParent.transform.childCount);
     }
     /// <summary>
@@ -51,7 +50,7 @@ public class SampleUITests
         samples.Add(new Sample());
         samples.Add(new Sample());
         Assert.AreEqual(0, contentParent.transform.childCount);
-        sampleUI.AddTextAndPrefab(samples);
+        _samplePanelGenerator.AddTextAndPrefab(samples);
         Assert.AreEqual(3, contentParent.transform.childCount);
     }
     /// <summary>
@@ -69,7 +68,7 @@ public class SampleUITests
         Assert.AreEqual(0, contentParent.transform.childCount);
 
         //Adding the 3 above Samples / Children to the "contentParent"
-        sampleUI.AddTextAndPrefab(samples);
+        _samplePanelGenerator.AddTextAndPrefab(samples);
         Assert.AreEqual(3, contentParent.transform.childCount);
 
         List<Sample> samples2 = new List<Sample>();
@@ -77,7 +76,7 @@ public class SampleUITests
         samples2.Add(new Sample());
         //adding the 2 samples from samples2 to the "contentParent"
         //AddTextAndPrefab should destroy the previous 3 children
-        sampleUI.AddTextAndPrefab(samples2);
+        _samplePanelGenerator.AddTextAndPrefab(samples2);
         yield return null;//wait for next frame
 
         Assert.AreEqual(2, contentParent.transform.childCount);
