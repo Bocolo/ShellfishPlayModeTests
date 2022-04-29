@@ -1,16 +1,19 @@
-using System.Collections;
+using App.UI;
 using NUnit.Framework;
-using UnityEngine;
-using UnityEngine.TestTools;
-using UI.Popup;
-using UnityEngine.SceneManagement;
-using UI.Navigation;
+using System.Collections;
 using TMPro;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.TestTools;
 
 public class PopUpTest
 {
     private GameObject _manager;
     private PopUp _popup;
+    /// <summary>
+    /// sets the required scene and game objects for tesing
+    /// </summary>
+    /// <returns></returns>
     [UnitySetUp]
     public IEnumerator SetUp()
     {
@@ -20,6 +23,9 @@ public class PopUpTest
         GameObject popUpGO = GameObject.Find("Canvas_Menu/Panel/Container/Pop_UP_Object");
         _popup = popUpGO.GetComponent<PopUp>();
     }
+    /// <summary>
+    /// test that PopUpAcknowleged deactivates its attached gameobject 
+    /// </summary>
     [Test]
     public void Acknowledge_Popup_Test()
     {
@@ -28,6 +34,9 @@ public class PopUpTest
         _popup.PopUpAcknowleged();
         Assert.IsFalse(_popup.gameObject.activeInHierarchy);
     }
+    /// <summary>
+    /// tests SetPopUpText sets the text as expected
+    /// </summary>
     [Test]
     public void SetText_Popup_Test()
     {
@@ -37,9 +46,12 @@ public class PopUpTest
         TMP_Text text = _popup.GetComponentInChildren<TMP_Text>();
         Assert.IsNotNull(text);
         Assert.AreEqual("\n\nPop Up Text", text.text); 
-        Assert.AreNotEqual("\n\nPop Up Pop Text", text.text);//review this test in edit modse
+        Assert.AreNotEqual("\n\nPop Up Pop Text", text.text);
 
     }
+    /// <summary>
+    /// test that SuccessfulLogin activates its attached gameobject 
+    /// </summary>
     [Test]
     public void SuccessfulLogin_Popup_Test()
     {
@@ -49,6 +61,9 @@ public class PopUpTest
         Assert.IsTrue(_popup.gameObject.activeInHierarchy);
 
     }
+    /// <summary>
+    /// test that UnSuccessfulLogin activates its attached gameobject 
+    /// </summary>
     [Test]
     public void UnsuccessfulLogin_Popup_Test()
     {
@@ -58,6 +73,9 @@ public class PopUpTest
         Assert.IsTrue(_popup.gameObject.activeInHierarchy);
 
     }
+    /// <summary>
+    /// test that UnSuccessfulSignUp activates its attached gameobject 
+    /// </summary>
     [Test]
     public void UnSuccessfulSignUp_Popup_Test()
     {
@@ -67,6 +85,9 @@ public class PopUpTest
         Assert.IsTrue(_popup.gameObject.activeInHierarchy);
 
     }
+    /// <summary>
+    /// test that SuccessfulSignUp activates its attached gameobject 
+    /// </summary>
     [Test]
     public void SuccessfulSignUp_Popup_Test()
     {

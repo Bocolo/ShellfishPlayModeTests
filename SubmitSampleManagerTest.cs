@@ -1,7 +1,7 @@
-using Data.Submit;
-using NUnit.Framework;/*
-using Submit.UI;*/
-using Save.Manager;
+using App.Samples.Manager;
+using App.SaveSystem.Manager;
+using NUnit.Framework;
+using Samples.Data;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;

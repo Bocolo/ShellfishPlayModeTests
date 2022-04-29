@@ -1,12 +1,14 @@
+using App.Samples.UI;
+using NUnit.Framework;
+using Samples.Data;
 using System.Collections;
 using System.Collections.Generic;
-using NUnit.Framework;
-using UI.SampleDisplay;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;
-using UnityEngine.UI;
-
+/// <summary>
+/// Tests te sample UI script
+/// </summary>
 public class SampleUITests
 {
     private SampleUI sampleUI;
@@ -26,6 +28,10 @@ public class SampleUITests
         yield return null;
       contentParent=  GameObject.Find("Canvas_UserSamples/Panel_Scroll/Scroll_View/Viewport/Content");
     }
+    /// <summary>
+    /// tests that AddTextAndPrefab adds a child to the content parent
+    /// when passed a single sample
+    /// </summary>
     [Test]
     public void SingleSample_TextAndPrefab_PrefabTest()
     {
@@ -33,6 +39,10 @@ public class SampleUITests
         sampleUI.AddTextAndPrefab(new Sample());
         Assert.AreEqual(1, contentParent.transform.childCount);
     }
+    /// <summary>
+    /// tests that AddTextAndPrefab adds the correct number of children to the content parent
+    /// when passed a sample list
+    /// </summary>
     [Test]
     public void ListSamples_TextAndPrefab_PrefabTest()
     {
@@ -44,6 +54,11 @@ public class SampleUITests
         sampleUI.AddTextAndPrefab(samples);
         Assert.AreEqual(3, contentParent.transform.childCount);
     }
+    /// <summary>
+    /// tests that AddTextAndPrefab destroys previously loaded children attached
+    /// to the content parent
+    /// </summary>
+    /// <returns></returns>
     [UnityTest]
     public IEnumerator ListSamples_TextAndPrefab_DestroyChildrenTest()
     {
@@ -67,99 +82,5 @@ public class SampleUITests
 
         Assert.AreEqual(2, contentParent.transform.childCount);
     }
-    [Test]
-    public void ListSamples_TextAndPrefab_TextTest()
-    {
- /*       List<Sample> samples = new List<Sample>();
-        Sample sampleA = new Sample
-        {
-            Name = "Test Sample",
-            Company = "Test Company",
-            Species = "Test Species",
-            ProductionWeekNo = 99,
-            IcesRectangleNo = "Test Rectangle",
-            Date = "Test Date",
-            Comment = "Test Comment"
-
-        };
-        Sample sampleB = new Sample
-        {
-            Name = "Test Sample",
-            Company = "Test Company",
-            Species = "Test Species",
-            ProductionWeekNo = 99,
-            SampleLocationName = "Test Location",
-            Date = "Test Date",
-            Comment = "Test Comment"
-
-        };
-        samples.Add(sampleA);
-        samples.Add(sampleB);
-     
-        sampleUI.AddTextAndPrefab(samples);
-
-
-        Text childA = sampleUI.GetContentParent().GetChild(0).GetChild(0).gameObject.GetComponent<Text>();
-        string expectedStringA = "Name: " + sampleA.Name + "\nCompany: " + sampleA.Company + "\nSpecies: " + sampleA.Species
-               + $"\nICEs Rectangle: {sampleA.IcesRectangleNo}"
-               + "\nWeek: " + sampleA.ProductionWeekNo + "\nDate: " + sampleA.Date + "\nComment: " + sampleA.Comment;
-
-        Assert.AreEqual(expectedStringA, childA.text);
-
-
-        Text childB = sampleUI.GetContentParent().GetChild(1).GetChild(0).gameObject.GetComponent<Text>();
-        string expectedStringB = ("Name: " + sampleB.Name + "\nCompany: " + sampleB.Company + "\nSpecies: " + sampleB.Species
-                + "\nLocation: " + sampleB.SampleLocationName + "\nWeek: " + sampleB.ProductionWeekNo + "\nDate: " + sampleB.Date
-                + "\nComment: " + sampleB.Comment);
-
-        Assert.AreEqual(expectedStringB, childB.text);*/
-    }
-    [Test]
-    public void SingleSample_PrefabTest_Ices()
-    {
-/*        Sample sample = new Sample
-        {
-            Name = "Test Sample",
-            Company = "Test Company",
-            Species = "Test Species",
-            ProductionWeekNo = 99,
-            IcesRectangleNo = "Test Rectangle",
-            Date = "Test Date",
-            Comment = "Test Comment"
-
-        };
-        sampleUI.AddTextAndPrefab(sample);
-        int childPrefabCount = sampleUI.GetContentParent().transform.childCount;
-        Assert.AreEqual(1, childPrefabCount);
-        Text child = sampleUI.GetContentParent().GetChild(0).GetChild(0).gameObject.GetComponent<Text>();
-        string expectedString = "Name: " + sample.Name + "\nCompany: " + sample.Company + "\nSpecies: " + sample.Species
-               + $"\nICEs Rectangle: {sample.IcesRectangleNo}"
-               + "\nWeek: " + sample.ProductionWeekNo + "\nDate: " + sample.Date + "\nComment: " + sample.Comment;
-        Assert.AreEqual(expectedString, child.text);*/
-    }
-    [Test]
-    public void SingleSample_PrefabTest_Location()
-    {
-/*        Sample sample = new Sample
-        {
-            Name = "Test Sample",
-            Company = "Test Company",
-            Species = "Test Species",
-            ProductionWeekNo = 99,
-            SampleLocationName = "Test Location",
-            Date = "Test Date",
-            Comment = "Test Comment"
-
-        };
-        sampleUI.AddTextAndPrefab(sample);
-        int childPrefabCount = sampleUI.GetContentParent().transform.childCount;
-
-        Assert.AreEqual(1, childPrefabCount);
-
-        Text child = sampleUI.GetContentParent().GetChild(0).GetChild(0).gameObject.GetComponent<Text>();
-        string expectedString = ("Name: " + sample.Name + "\nCompany: " + sample.Company + "\nSpecies: " + sample.Species
-                + "\nLocation: " + sample.SampleLocationName + "\nWeek: " + sample.ProductionWeekNo + "\nDate: " + sample.Date
-                + "\nComment: " + sample.Comment);
-        Assert.AreEqual(expectedString, child.text);*/
-    }
+  
 }

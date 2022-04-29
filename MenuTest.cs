@@ -1,8 +1,7 @@
-using System;
-using System.Collections;
+using App.Navigation;
+using App.SaveSystem.Manager;
 using NUnit.Framework;
-using Save.Manager;
-using UI.Navigation;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;
@@ -62,8 +61,6 @@ public class MenuTest
     [Test]
     public void Logout()
     {
-
-   //     yield return null;
         menu.LogOut();
         Assert.AreEqual(null, SaveData.Instance.LoadUserProfile().Name);
 
@@ -123,5 +120,4 @@ public class MenuTest
         yield return null;
         Assert.AreEqual(6, SceneManager.GetActiveScene().buildIndex);
     }
-//retrieval page test required
 }

@@ -1,11 +1,14 @@
-using NUnit.Framework;/*
-using Submit.UI;*/
-using Save.Manager;
+using App.SaveSystem.Manager;
+using NUnit.Framework;
+using Samples.Data;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;
+using Users.Data;
+/// <summary>
+/// tests the SAve Data Singleton
+/// </summary>
 public class SaveTests
 {
     [OneTimeSetUp]
@@ -19,14 +22,21 @@ public class SaveTests
     {
         yield return null;
     }
+    /// <summary>
+    /// deletes and updates sample save files
+    /// </summary>
     [TearDown]
     public void TearDown()
     {
         SaveData.Instance.DeleteSubmittedSamplesFromDevice();
         SaveData.Instance.UpdateSubmittedStoredSamples();
     }
+    /// <summary>
+    /// tets the save (and load) user profile function
+    /// checking the returned user equals the saved user
+    /// </summary>
     [Test]
-    public void SaveUserProfileTest()
+    public void SaveUserProfile_Test()
     {
         User savedUser = new User()
         {
@@ -39,8 +49,12 @@ public class SaveTests
         User loadedUser = SaveData.Instance.LoadUserProfile();
         Assert.AreEqual(savedUser, loadedUser);
     }
+    /// <summary>
+    /// test saving and loading a sample
+    /// using AddAndSaveSubmittedSample function
+    /// </summary>
     [Test]
-    public void AddAndSaveToSubmittedListTest()
+    public void AddAndSaveToSubmittedList_Test()
     {
         Sample sample = new Sample
         {
@@ -51,8 +65,12 @@ public class SaveTests
         Assert.AreEqual(sample, afterLoad[0]);
         Assert.AreNotEqual(new Sample(), afterLoad[0]);
     }
+    /// <summary>
+    /// test saving and loading a sample
+    /// using AddAndSaveStoredSample function
+    /// </summary>
     [Test]
-    public void AddAndSaveToStoredListTest()
+    public void AddAndSaveToStoredList_Test()
     {
         Sample sample = new Sample
         {
@@ -63,8 +81,12 @@ public class SaveTests
         Assert.AreEqual(sample, afterLoad[0]);
         Assert.AreNotEqual(new Sample(), afterLoad[0]);
     }
+    /// <summary>
+    /// Test the save data singleton successfully adds a sample
+    /// to the submitted samples list
+    /// </summary>
     [Test]
-    public void AddToSubmittedListTest()
+    public void AddToSubmittedList_Test()
     {
         Sample sample = new Sample
         {
@@ -76,8 +98,12 @@ public class SaveTests
         Assert.AreEqual(sample.Name, submittedSamples[0].Name);
         Assert.AreNotEqual(new Sample(), submittedSamples[0]);
     }
+    /// <summary>
+    /// Test the save data singleton successfully adds a sample
+    /// to the stored samples list
+    /// </summary>
     [Test]
-    public void AddToStoredListTest()
+    public void AddToStoredList_Test()
     {
         Sample sample = new Sample
         {
@@ -89,9 +115,12 @@ public class SaveTests
         Assert.AreEqual(sample.Name, storedSamples[0].Name);
         Assert.AreNotEqual(new Sample(), storedSamples[0]);
     }
-
+    /// <summary>
+    /// tests UpdateSubmittedStoredSamples clears the stored
+    /// sample list and save file, using a single sample
+    /// </summary>
     [Test]
-    public void UpdateSubmittedStoredSamplesTestSimple()
+    public void UpdateSubmittedStoredSamples_Test_Simple()
     {
         Sample sample = new Sample
         {
@@ -105,8 +134,13 @@ public class SaveTests
         Assert.IsEmpty(loadedStoredSamples);
 
     }
+    /// <summary>
+    /// tests UpdateSubmittedStoredSamples clears the stored
+    /// sample list and save file, using 2 samples
+    /// compares list counts to test samples are being added and cleared
+    /// </summary>
     [Test]
-    public void UpdateSubmittedStoredSamplesTestExtended()
+    public void UpdateSubmittedStoredSamples_Test_Extended()
     {
         Sample sampleA = new Sample
         {
@@ -126,25 +160,34 @@ public class SaveTests
         SaveData.Instance.AddToSubmittedSamples(SaveData.Instance.LoadAndGetStoredSamples()[0]);
         SaveData.Instance.UpdateSubmittedStoredSamples();
         int afterUpdateStoredCount = SaveData.Instance.LoadAndGetStoredSamples().Count;
-        int afterUpdateSubmittedCount = SaveData.Instance.LoadAndGetSubmittedSamples().Count;// SaveData.Instance.LoadAndGetSubmittedSamples().Count;
+        int afterUpdateSubmittedCount = SaveData.Instance.LoadAndGetSubmittedSamples().Count;
 
-        Assert.AreEqual(beforeUpdateSubmittedCount + 1, afterUpdateSubmittedCount);//new add
+        Assert.AreEqual(beforeUpdateSubmittedCount + 1, afterUpdateSubmittedCount);
         Assert.AreEqual(afterUpdateStoredCount, 0);
         Assert.AreNotEqual(afterAddStoredCount, afterUpdateStoredCount);
 
     }
+    /// <summary>
+    /// test LoadAndGetSubmittedSamples returns a list
+    /// </summary>
     [Test]
     public void LoadAndGetSubmittedSamplesTest()
     {
         List<Sample> afterLoad = SaveData.Instance.LoadAndGetSubmittedSamples();
         Assert.IsNotNull(afterLoad);
     }
+    /// <summary>
+    /// test LoadAndGetStoredSamples returns a list
+    /// </summary>
     [Test]
     public void LoadAndGetStoredSamplesTest()
     {
         List<Sample> afterLoad = SaveData.Instance.LoadAndGetStoredSamples();
         Assert.IsNotNull(afterLoad);
     }
+    /// <summary>
+    /// tests ClearSubmittedSamplesList empties the submmitted samples list
+    /// </summary>
     [Test]
     public void ClearSubmittedTest()
     {
@@ -158,6 +201,9 @@ public class SaveTests
         SaveData.Instance.ClearSubmittedSamplesList();
         Assert.IsEmpty(submittedSamples);
     }
+    /// <summary>
+    /// tests ClearStoredSamplesList empties the stored samples list
+    /// </summary>
     [Test]
     public void ClearStoredTest()
     {

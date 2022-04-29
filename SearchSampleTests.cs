@@ -1,7 +1,7 @@
+using App.Samples.UI;
 using NUnit.Framework;
 using System.Collections;
 using TMPro;
-using UI.Retrieve;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;

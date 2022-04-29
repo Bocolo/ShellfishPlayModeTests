@@ -1,14 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
+using App.Navigation;
+using App.Profile.UI;
+using App.SaveSystem.Manager;
 using NUnit.Framework;
-using Save.Manager;
+using System.Collections;
 using TMPro;
-using UI.Navigation;
-using UI.Profile;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;
-public class ProfileUITests
+/// <summary>
+/// tests the profile manager script
+/// </summary>
+public class ProfileManagerTests
 {
     private ProfileManager profileManager;
     private Menu menu;
@@ -20,6 +22,11 @@ public class ProfileUITests
     private GameObject updateButton;
     private TMP_InputField _userNameInput;
     private TMP_InputField _companyInput;
+
+    /// <summary>
+    /// setting the game objects and scene
+    /// </summary>
+    /// <returns></returns>
     [UnitySetUp]
     public IEnumerator SetUp()
     {
@@ -41,6 +48,9 @@ public class ProfileUITests
         updateButton = GameObject.Find("Canvas_Profile/Panel_Main/Scroll_View/Viewport/Content/Panel/Buttons/UpdateButton/Update_Profile");
    
     }
+    /// <summary>
+    /// tests SaveProfile successfully save the profile passed to input the input fields
+    /// </summary>
     [Test]
     public void SaveProfile_User_Test()
     {
@@ -57,6 +67,9 @@ public class ProfileUITests
         Assert.AreEqual(companyText, SaveData.Instance.LoadUserProfile().Company);
 
     }
+    /// <summary>
+    /// tests SaveProfile activates the excpected game objects
+    /// </summary>
     [Test]
     public void SaveProfile_View_Test()
     {
@@ -68,6 +81,9 @@ public class ProfileUITests
         Assert.IsFalse(company.activeInHierarchy);
         Assert.IsFalse(saveButton.activeInHierarchy);
     }
+    /// <summary>
+    /// tests GoToUpdateProfile activates the excpected game objects
+    /// </summary>
     [Test]
     public void UpdateProfile_View_Test()
     {

@@ -1,13 +1,14 @@
-using System;
-using System.Collections;
+using App.Navigation;
+using App.Samples.UI;
+using App.Samples.Validation;
+using App.SaveSystem.Manager;
 using NUnit.Framework;
-using Save.Manager;
-using TMPro;
-using UI.Navigation;
-using UI.Submit;
+using Samples.Data;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;
+using Users.Data;
 
 public class SubmitCanvasManager_Validator_Tests
 {
