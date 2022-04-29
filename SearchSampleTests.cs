@@ -5,110 +5,153 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;
-
+/// <summary>
+/// This test script test the SearchSampleUI monobehaviour
+/// script is performing as intended
+/// </summary>
 public class SearchSampleTests
 {
-    private GameObject manager;
-    private SearchSampleUI searchSampleUI;
-    private GameObject searchInputGO;
-    private GameObject searchLimitGO;
-    private GameObject searchFieldGO;
-    private TMP_InputField searchLimit;
-    private TMP_InputField searchInput;
-    private TMP_Dropdown searchFieldDropDown;
+    private GameObject _manager;
+    private SearchSampleUI _searchSampleUI;
+    private GameObject _searchInputGO;
+    private GameObject _searchLimitGO;
+    private GameObject _searchFieldGO;
+    private TMP_InputField _searchLimit;
+    private TMP_InputField _searchInput;
+    private TMP_Dropdown _searchFieldDropDown;
+    /// <summary>
+    /// Setting the scene and gameobjects
+    /// </summary>
+    /// <returns></returns>
     [UnitySetUp]
     public IEnumerator SetUp()
     {
         SceneManager.LoadScene(2);
         yield return null;
-        manager = GameObject.Find("Core/RetrieveManager");
+        _manager = GameObject.Find("Core/RetrieveManager");
 
         yield return null;
-        searchSampleUI = manager.GetComponent<SearchSampleUI>();
+        _searchSampleUI = _manager.GetComponent<SearchSampleUI>();
         yield return null;
-        searchInputGO = GameObject.Find("Retrieval_Canvas/Panel/Container/User_Inputs/Name");
-        searchInput = searchInputGO.GetComponent<TMP_InputField>();
-        searchLimitGO = GameObject.Find("Retrieval_Canvas/Panel/Container/User_Inputs/Limit");
-        searchLimit = searchLimitGO.GetComponent<TMP_InputField>();
-        searchFieldGO = GameObject.Find("Retrieval_Canvas/Panel/Container/User_Inputs/FieldSelection");
-        searchFieldDropDown = searchFieldGO.GetComponent<TMP_Dropdown>();
+        _searchInputGO = GameObject.Find("Retrieval_Canvas/Panel/Container/User_Inputs/Name");
+        _searchInput = _searchInputGO.GetComponent<TMP_InputField>();
+        _searchLimitGO = GameObject.Find("Retrieval_Canvas/Panel/Container/User_Inputs/Limit");
+        _searchLimit = _searchLimitGO.GetComponent<TMP_InputField>();
+        _searchFieldGO = GameObject.Find("Retrieval_Canvas/Panel/Container/User_Inputs/FieldSelection");
+        _searchFieldDropDown = _searchFieldGO.GetComponent<TMP_Dropdown>();
     }
+    /// <summary>
+    /// Testing SetSearchValues sets the correct default values
+    /// when no inputs are provided
+    /// </summary>
     [Test]
     public void SetSearchValues_Default_Test()
     {
-        searchSampleUI.SetSearchValues();
-        Assert.AreEqual("", searchSampleUI.SearchNameSelection);
-        Assert.AreEqual(100, searchSampleUI.SearchLimitSelection);
-        Assert.AreEqual("", searchSampleUI.SearchFieldSelection);
+        _searchSampleUI.SetSearchValues();
+        Assert.AreEqual("", _searchSampleUI.SearchNameSelection);
+        Assert.AreEqual(100, _searchSampleUI.SearchLimitSelection);
+        Assert.AreEqual("", _searchSampleUI.SearchFieldSelection);
     }
- 
+    /// <summary>
+    /// Testing SetSearchValues sets the correct name value
+    /// when name inputs is provided
+    /// </summary>
     [Test]
     public void SetNameValue_Test()
     {
-        searchInput.text = "Name Text";
-        searchSampleUI.SetSearchValues();
-        Assert.AreEqual("Name Text", searchSampleUI.SearchNameSelection);
+        _searchInput.text = "Name Text";
+        _searchSampleUI.SetSearchValues();
+        Assert.AreEqual("Name Text", _searchSampleUI.SearchNameSelection);
 
     }
+    /// <summary>
+    /// Testing SetSearchValues sets the correct limit 
+    /// when limit input string is provided
+    /// </summary>
     [Test]
     public void SetLimitValue_Test()
     {
 
-        searchLimit.text = "1";
-        searchSampleUI.SetSearchValues();
-        Assert.AreEqual(1, searchSampleUI.SearchLimitSelection);
+        _searchLimit.text = "1";
+        _searchSampleUI.SetSearchValues();
+        Assert.AreEqual(1, _searchSampleUI.SearchLimitSelection);
 
     }
+    /// <summary>
+    /// Testing SetSearchValues sets the correct field selection value
+    /// when dropdown input is 0
+    /// </summary>
     [Test]
     public void SetSearchField_Test_0()
     {
 
-        searchFieldDropDown.value = 0;
-        searchSampleUI.SetSearchValues();
-        Assert.AreEqual("", searchSampleUI.SearchFieldSelection);
+        _searchFieldDropDown.value = 0;
+        _searchSampleUI.SetSearchValues();
+        Assert.AreEqual("", _searchSampleUI.SearchFieldSelection);
 
     }
+    /// <summary>
+    /// Testing SetSearchValues sets the correct field selection value
+    /// when dropdown input is 1
+    /// </summary>
     [Test]
     public void SetSearchField_Test_1()
     {
 
-        searchFieldDropDown.value = 1;
-        searchSampleUI.SetSearchValues();
-        Assert.AreEqual("Name", searchSampleUI.SearchFieldSelection);
+        _searchFieldDropDown.value = 1;
+        _searchSampleUI.SetSearchValues();
+        Assert.AreEqual("Name", _searchSampleUI.SearchFieldSelection);
 
     }
+    /// <summary>
+    /// Testing SetSearchValues sets the correct field selection value
+    /// when dropdown input is 2
+    /// </summary>
     [Test]
     public void SetSearchField_Test_2()
     {
-        searchFieldDropDown.value = 2;
-        searchSampleUI.SetSearchValues();
-        Assert.AreEqual("Company", searchSampleUI.SearchFieldSelection);
+        _searchFieldDropDown.value = 2;
+        _searchSampleUI.SetSearchValues();
+        Assert.AreEqual("Company", _searchSampleUI.SearchFieldSelection);
 
     }
+    /// <summary>
+    /// Testing SetSearchValues sets the correct field selection value
+    /// when dropdown input is 3
+    /// </summary>
     [Test]
     public void SetSearchField_Test_3()
     {
-        searchFieldDropDown.value = 3;
-        searchSampleUI.SetSearchValues();
-        Assert.AreEqual("Species", searchSampleUI.SearchFieldSelection);
+        _searchFieldDropDown.value = 3;
+        _searchSampleUI.SetSearchValues();
+        Assert.AreEqual("Species", _searchSampleUI.SearchFieldSelection);
 
     }
+    /// <summary>
+    /// Testing SetSearchValues sets the correct field selection value
+    /// when dropdown input is 4
+    /// </summary>
     [Test]
     public void SetSearchField_Test_4()
     {
 
-        searchFieldDropDown.value = 4;
-        searchSampleUI.SetSearchValues();
-        Assert.AreEqual("ProductionWeekNo", searchSampleUI.SearchFieldSelection);
+        _searchFieldDropDown.value = 4;
+        _searchSampleUI.SetSearchValues();
+        Assert.AreEqual("ProductionWeekNo", _searchSampleUI.SearchFieldSelection);
 
     }
+    /// <summary>
+    /// Testing SetSearchValues sets the correct field selection value
+    /// when dropdown input is 5
+    /// </summary>
     [Test]
     public void SetSearchField_Test_5()
     {
 
-        searchFieldDropDown.value = 5;
-        searchSampleUI.SetSearchValues();
-        Assert.AreEqual("Date", searchSampleUI.SearchFieldSelection);
+        _searchFieldDropDown.value = 5;
+        _searchSampleUI.SetSearchValues();
+        Assert.AreEqual("Date", _searchSampleUI.SearchFieldSelection);
 
     }
+  
 }

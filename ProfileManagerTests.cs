@@ -12,14 +12,14 @@ using UnityEngine.TestTools;
 /// </summary>
 public class ProfileManagerTests
 {
-    private ProfileManager profileManager;
-    private Menu menu;
-    private GameObject manager;
-    private GameObject profile;
-    private GameObject name;
-    private GameObject company;
-    private GameObject saveButton;
-    private GameObject updateButton;
+    private ProfileManager _profileManager;
+    private Menu _menu;
+    private GameObject _manager;
+    private GameObject _profile;
+    private GameObject _name;
+    private GameObject _company;
+    private GameObject _saveButton;
+    private GameObject _updateButton;
     private TMP_InputField _userNameInput;
     private TMP_InputField _companyInput;
 
@@ -34,18 +34,18 @@ public class ProfileManagerTests
         yield return null; 
         SceneManager.LoadScene(4);
         yield return null;
-        manager = GameObject.Find("Core/ProfileManager");
+        _manager = GameObject.Find("Core/ProfileManager");
 
         yield return null;
-        profileManager = manager.GetComponent<ProfileManager>();
+        _profileManager = _manager.GetComponent<ProfileManager>();
      
         yield return null;
         ///Inelegant method of retrieval of gameObjects but useable for play mode tests
-        profile = GameObject.Find("Canvas_Profile/Panel_Main/Scroll_View/Viewport/Content/Panel/Inputs/ProfileDetails/Profile_Text");
-        name = GameObject.Find("Canvas_Profile/Panel_Main/Scroll_View/Viewport/Content/Panel/Inputs/Name_input");
-        company = GameObject.Find("Canvas_Profile/Panel_Main/Scroll_View/Viewport/Content/Panel/Inputs/Company_input");
-        saveButton = GameObject.Find("Canvas_Profile/Panel_Main/Scroll_View/Viewport/Content/Panel/Buttons/Save_Profile");
-        updateButton = GameObject.Find("Canvas_Profile/Panel_Main/Scroll_View/Viewport/Content/Panel/Buttons/UpdateButton/Update_Profile");
+        _profile = GameObject.Find("Canvas_Profile/Panel_Main/Scroll_View/Viewport/Content/Panel/Inputs/ProfileDetails/Profile_Text");
+        _name = GameObject.Find("Canvas_Profile/Panel_Main/Scroll_View/Viewport/Content/Panel/Inputs/Name_input");
+        _company = GameObject.Find("Canvas_Profile/Panel_Main/Scroll_View/Viewport/Content/Panel/Inputs/Company_input");
+        _saveButton = GameObject.Find("Canvas_Profile/Panel_Main/Scroll_View/Viewport/Content/Panel/Buttons/Save_Profile");
+        _updateButton = GameObject.Find("Canvas_Profile/Panel_Main/Scroll_View/Viewport/Content/Panel/Buttons/UpdateButton/Update_Profile");
    
     }
     /// <summary>
@@ -54,15 +54,15 @@ public class ProfileManagerTests
     [Test]
     public void SaveProfile_User_Test()
     {
-        menu = manager.AddComponent<Menu>();
-        menu.LogOut();
-        _userNameInput = name.GetComponent<TMP_InputField>();
-        _companyInput = company.GetComponent<TMP_InputField>();
+        _menu = _manager.AddComponent<Menu>();
+        _menu.LogOut();
+        _userNameInput = _name.GetComponent<TMP_InputField>();
+        _companyInput = _company.GetComponent<TMP_InputField>();
         string nameText = "SaveProfile Test Name"; ;
         string companyText = "SaveProfile Test Company";
         _userNameInput.text = nameText;
         _companyInput.text = companyText;
-        profileManager.SaveProfile();
+        _profileManager.SaveProfile();
         Assert.AreEqual(nameText, SaveData.Instance.LoadUserProfile().Name);
         Assert.AreEqual(companyText, SaveData.Instance.LoadUserProfile().Company);
 
@@ -73,13 +73,13 @@ public class ProfileManagerTests
     [Test]
     public void SaveProfile_View_Test()
     {
-        profileManager.SaveProfile();
+        _profileManager.SaveProfile();
 
-        Assert.IsTrue(profile.activeInHierarchy);
-        Assert.IsTrue(updateButton.activeInHierarchy);
-        Assert.IsFalse(name.activeInHierarchy);
-        Assert.IsFalse(company.activeInHierarchy);
-        Assert.IsFalse(saveButton.activeInHierarchy);
+        Assert.IsTrue(_profile.activeInHierarchy);
+        Assert.IsTrue(_updateButton.activeInHierarchy);
+        Assert.IsFalse(_name.activeInHierarchy);
+        Assert.IsFalse(_company.activeInHierarchy);
+        Assert.IsFalse(_saveButton.activeInHierarchy);
     }
     /// <summary>
     /// tests GoToUpdateProfile activates the excpected game objects
@@ -87,12 +87,12 @@ public class ProfileManagerTests
     [Test]
     public void UpdateProfile_View_Test()
     {
-        profileManager.GoToUpdateProfile();
-        Assert.IsFalse(profile.activeInHierarchy);
-        Assert.IsFalse(updateButton.activeInHierarchy);
-        Assert.IsTrue(name.activeInHierarchy);
-        Assert.IsTrue(company.activeInHierarchy);
-        Assert.IsTrue(saveButton.activeInHierarchy);
+        _profileManager.GoToUpdateProfile();
+        Assert.IsFalse(_profile.activeInHierarchy);
+        Assert.IsFalse(_updateButton.activeInHierarchy);
+        Assert.IsTrue(_name.activeInHierarchy);
+        Assert.IsTrue(_company.activeInHierarchy);
+        Assert.IsTrue(_saveButton.activeInHierarchy);
       
     }
 }

@@ -6,26 +6,29 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;
-
+/// <summary>
+/// Tests the submit sample manager script
+/// </summary>
 public class SubmitSampleManagerTest
 {
-    //test upload store syubmit&savce
-    private SubmitSampleManager submitSampleManager;
-    private GameObject manager;
+    private SubmitSampleManager _submitSampleManager;
+    private GameObject _manager;
     [UnitySetUp]
     public IEnumerator SetUp()
     {
         SceneManager.LoadScene(3);
         yield return null;
-        yield return null;
-        manager = GameObject.Find("Core/RetrieveManager");
+        _manager = GameObject.Find("Core/RetrieveManager");
 
         yield return null;
-        submitSampleManager = manager.GetComponent<SubmitSampleManager>();
+        _submitSampleManager = _manager.GetComponent<SubmitSampleManager>();
         yield return null;
 
     }
-
+    /// <summary>
+    /// This tests the SubmitAndSaveStoredSamples function
+    /// cleared the stored samples list and increases the submitted samples list by 1
+    /// </summary>
     [Test]
     public void Submit_And_Save_Sample_Test()
     {
@@ -37,7 +40,7 @@ public class SubmitSampleManagerTest
         int storedSampleCount = SaveData.Instance.UsersStoredSamples.Count;
         int submittedSampleCount = SaveData.Instance.UsersSubmittedSamples.Count;
         Debug.LogFormat("Stored count {0} and ~Submit count {1}", storedSampleCount, submittedSampleCount);
-        submitSampleManager.SubmitAndSaveStoredSamples();
+        _submitSampleManager.SubmitAndSaveStoredSamples();
 
         int storedSampleCountAfter = SaveData.Instance.UsersStoredSamples.Count;
         int submittedSampleCountAfter = SaveData.Instance.UsersSubmittedSamples.Count;

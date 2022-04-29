@@ -10,9 +10,9 @@ using UnityEngine.TestTools;
 /// </summary>
 public class MenuTest
 {
-    private Menu menu;
-    private BackToMenu backToMenu;
-    private GameObject manager;
+    private Menu _menu;
+    private BackToMenu _backToMenu;
+    private GameObject _manager;
     /// <summary>
     /// Setting up the unity scene and accessing the relevant Game Objects and components
     /// </summary>
@@ -23,9 +23,9 @@ public class MenuTest
     {
         SceneManager.LoadScene(0);
         yield return null;
-        manager = GameObject.Find("Managers/MenuManager");
+        _manager = GameObject.Find("Managers/MenuManager");
         yield return null;
-        menu = manager.GetComponent<Menu>();
+        _menu = _manager.GetComponent<Menu>();
         yield return null;
 
     }
@@ -37,11 +37,11 @@ public class MenuTest
     public IEnumerator BackToMenuTest()
     {
         GameObject go = new GameObject();
-        backToMenu = go.AddComponent<BackToMenu>();
-        menu.SubmitPage();
+        _backToMenu = go.AddComponent<BackToMenu>();
+        _menu.SubmitPage();
         yield return null;
         Assert.AreEqual(1, SceneManager.GetActiveScene().buildIndex);
-        backToMenu.ReturnToMenu();
+        _backToMenu.ReturnToMenu();
         yield return null;
         Assert.AreEqual(0, SceneManager.GetActiveScene().buildIndex);
     }
@@ -61,7 +61,7 @@ public class MenuTest
     [Test]
     public void Logout()
     {
-        menu.LogOut();
+        _menu.LogOut();
         Assert.AreEqual(null, SaveData.Instance.LoadUserProfile().Name);
 
     }
@@ -72,7 +72,7 @@ public class MenuTest
     [UnityTest]
     public IEnumerator LoadedSceneIs_SubmitPage()
     {
-        menu.SubmitPage();
+        _menu.SubmitPage();
         yield return null;
         Assert.AreEqual(1, SceneManager.GetActiveScene().buildIndex);
     }
@@ -83,7 +83,7 @@ public class MenuTest
     [UnityTest]
     public IEnumerator LoadedSceneIs_UserSamplesPage()
     {
-        menu.UserSamplesPage();
+        _menu.UserSamplesPage();
         yield return null;
         Assert.AreEqual(3, SceneManager.GetActiveScene().buildIndex);
     }
@@ -94,7 +94,7 @@ public class MenuTest
     [UnityTest]
     public IEnumerator LoadedSceneIs_ProfilePage()
     {
-        menu.ProfilePage();
+        _menu.ProfilePage();
         yield return null;
         Assert.AreEqual(4, SceneManager.GetActiveScene().buildIndex);
     }
@@ -105,7 +105,7 @@ public class MenuTest
     [UnityTest]
     public IEnumerator LoadedSceneIs_LoginPage()
     {
-        menu.LoginPage();
+        _menu.LoginPage();
         yield return null;
         Assert.AreEqual(5, SceneManager.GetActiveScene().buildIndex);
     }
@@ -116,7 +116,7 @@ public class MenuTest
     [UnityTest]
     public IEnumerator LoadedSceneIs_HelpPage()
     {
-        menu.HelpPage();
+        _menu.HelpPage();
         yield return null;
         Assert.AreEqual(6, SceneManager.GetActiveScene().buildIndex);
     }

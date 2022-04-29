@@ -12,20 +12,20 @@ using UnityEngine.TestTools;
 public class SamplePanelGeneratorTests
 {
     private SamplePanelGenerator _samplePanelGenerator;
-    private GameObject manager;
-    private GameObject contentParent;
+    private GameObject _manager;
+    private GameObject _contentParent;
     [UnitySetUp]
     public IEnumerator SetUp()
     {
         SceneManager.LoadScene(3);
         yield return null;
         yield return null;
-        manager = GameObject.Find("Core/RetrieveManager");
+        _manager = GameObject.Find("Core/RetrieveManager");
 
         yield return null;
-        _samplePanelGenerator = manager.GetComponent<SamplePanelGenerator>();
+        _samplePanelGenerator = _manager.GetComponent<SamplePanelGenerator>();
         yield return null;
-      contentParent=  GameObject.Find("Canvas_UserSamples/Panel_Scroll/Scroll_View/Viewport/Content");
+      _contentParent=  GameObject.Find("Canvas_UserSamples/Panel_Scroll/Scroll_View/Viewport/Content");
     }
     /// <summary>
     /// tests that AddTextAndPrefab adds a child to the content parent
@@ -34,9 +34,9 @@ public class SamplePanelGeneratorTests
     [Test]
     public void SingleSample_TextAndPrefab_PrefabTest()
     {
-        Assert.AreEqual(0,contentParent.transform.childCount);
+        Assert.AreEqual(0,_contentParent.transform.childCount);
         _samplePanelGenerator.AddTextAndPrefab(new Sample());
-        Assert.AreEqual(1, contentParent.transform.childCount);
+        Assert.AreEqual(1, _contentParent.transform.childCount);
     }
     /// <summary>
     /// tests that AddTextAndPrefab adds the correct number of children to the content parent
@@ -49,9 +49,9 @@ public class SamplePanelGeneratorTests
         samples.Add(new Sample());
         samples.Add(new Sample());
         samples.Add(new Sample());
-        Assert.AreEqual(0, contentParent.transform.childCount);
+        Assert.AreEqual(0, _contentParent.transform.childCount);
         _samplePanelGenerator.AddTextAndPrefab(samples);
-        Assert.AreEqual(3, contentParent.transform.childCount);
+        Assert.AreEqual(3, _contentParent.transform.childCount);
     }
     /// <summary>
     /// tests that AddTextAndPrefab destroys previously loaded children attached
@@ -65,11 +65,11 @@ public class SamplePanelGeneratorTests
         samples.Add(new Sample());
         samples.Add(new Sample());
         samples.Add(new Sample());
-        Assert.AreEqual(0, contentParent.transform.childCount);
+        Assert.AreEqual(0, _contentParent.transform.childCount);
 
         //Adding the 3 above Samples / Children to the "contentParent"
         _samplePanelGenerator.AddTextAndPrefab(samples);
-        Assert.AreEqual(3, contentParent.transform.childCount);
+        Assert.AreEqual(3, _contentParent.transform.childCount);
 
         List<Sample> samples2 = new List<Sample>();
         samples2.Add(new Sample());
@@ -79,7 +79,7 @@ public class SamplePanelGeneratorTests
         _samplePanelGenerator.AddTextAndPrefab(samples2);
         yield return null;//wait for next frame
 
-        Assert.AreEqual(2, contentParent.transform.childCount);
+        Assert.AreEqual(2, _contentParent.transform.childCount);
     }
   
 }

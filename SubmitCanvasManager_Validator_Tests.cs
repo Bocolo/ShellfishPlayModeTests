@@ -9,63 +9,70 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;
 using Users.Data;
-
+/// <summary>
+/// this script test the Submit Canvas Manager and 
+/// SAmple Validator sctips in Play Mode
+/// </summary>
 public class SubmitCanvasManager_Validator_Tests
 {
-    private Menu menu;
-    private GameObject manager;
-    private GameObject submitManager;
-    private GameObject smallCanvas;
-    private GameObject largeCanvas;
-    private SubmitCanvasManager submitCanvasManager;
-
-    private SampleValidator sampleValidator;
+    private Menu _menu;
+    private GameObject _manager;
+    private GameObject _submitManager;
+    private GameObject _smallCanvas;
+    private GameObject _largeCanvas;
+    private SubmitCanvasManager _submitCanvasManager;
+    private SampleValidator _sampleValidator;
+    /// <summary>
+    /// Setting up the scene and the Game Object references
+    /// </summary>
+    /// <returns></returns>
     [UnitySetUp]
     public IEnumerator SetUp()
     {
         SceneManager.LoadScene(0);
         yield return null;
 
-        manager = GameObject.Find("Managers/MenuManager");
+        _manager = GameObject.Find("Managers/MenuManager");
 
         yield return null;
-        menu = manager.GetComponent<Menu>();
+        _menu = _manager.GetComponent<Menu>();
         yield return null;
 
-        menu.SubmitPage();
+        _menu.SubmitPage();
         yield return null;
-        submitManager = GameObject.Find("Core/SubmitManager");
+        _submitManager = GameObject.Find("Core/SubmitManager");
         yield return null;
 
-        submitCanvasManager = submitManager.GetComponent<SubmitCanvasManager>();
-        sampleValidator = submitManager.GetComponent<SampleValidator>();
+        _submitCanvasManager = _submitManager.GetComponent<SubmitCanvasManager>();
+        _sampleValidator = _submitManager.GetComponent<SampleValidator>();
 
         yield return null;
-        smallCanvas = submitCanvasManager.GetSmallCanvas();
-        largeCanvas = submitCanvasManager.GetLargeCanvas();
+        _smallCanvas = _submitCanvasManager.GetSmallCanvas();
+        _largeCanvas = _submitCanvasManager.GetLargeCanvas();
     }
    
-
-    /// <summary>
-    /// could i just dow 
-    /// </summary>
+/// <summary>
+/// testing the NewSample method form the Sample validator scripts
+/// new sample should always return a sample from the inputs
+/// regardless of whethere the sample inputs are validated
+/// </summary>
     [Test]
     public void SampleValidator_New_Sample()
     {
  
-        submitCanvasManager.Name.text = "Test Small Name";
-        submitCanvasManager.Company.text = "Test Small Company";
-        submitCanvasManager.Comments.text = "Test A Small Comment";
-        submitCanvasManager.ProductionWk.value = 1;
-        submitCanvasManager.Species.value = 2;
-        submitCanvasManager.DayDrop.value = 1;
-        submitCanvasManager.MonthDrop.value = 1;
-        submitCanvasManager.YearDrop.value = 1;
-        submitCanvasManager.IceRectangle.value = 6;
-        submitCanvasManager.SampleLocationName.value = 7;
+        _submitCanvasManager.Name.text = "Test Small Name";
+        _submitCanvasManager.Company.text = "Test Small Company";
+        _submitCanvasManager.Comments.text = "Test A Small Comment";
+        _submitCanvasManager.ProductionWk.value = 1;
+        _submitCanvasManager.Species.value = 2;
+        _submitCanvasManager.DayDrop.value = 1;
+        _submitCanvasManager.MonthDrop.value = 1;
+        _submitCanvasManager.YearDrop.value = 1;
+        _submitCanvasManager.IceRectangle.value = 6;
+        _submitCanvasManager.SampleLocationName.value = 7;
    
-        sampleValidator.ValidateValues();
-        Sample sample = sampleValidator.NewSample();
+        Assert.IsFalse(_sampleValidator.ValidateValues());
+        Sample sample = _sampleValidator.NewSample();
         Assert.AreEqual("Test Small Name", sample.Name);
         Assert.AreEqual("Test Small Company", sample.Company);
         Assert.AreEqual("Test A Small Comment", sample.Comment);
@@ -77,101 +84,101 @@ public class SubmitCanvasManager_Validator_Tests
     [Test]
     public void SampleValidator_Value_Validator_True()
     {
-        submitCanvasManager.Name.text = "Test Small Name";
-        submitCanvasManager.Company.text = "Test Small Company";
-        submitCanvasManager.Comments.text = "Test A Small Comment";
-        submitCanvasManager.ProductionWk.value = 1;
-        submitCanvasManager.Species.value = 2;
-        submitCanvasManager.DayDrop.value = 1;
-        submitCanvasManager.MonthDrop.value = 1;
-        submitCanvasManager.YearDrop.value = 1;
-        submitCanvasManager.IceRectangle.value = 6;
-        submitCanvasManager.SampleLocationName.value = 0;
-        Assert.IsTrue(sampleValidator.ValidateValues());
+        _submitCanvasManager.Name.text = "Test Small Name";
+        _submitCanvasManager.Company.text = "Test Small Company";
+        _submitCanvasManager.Comments.text = "Test A Small Comment";
+        _submitCanvasManager.ProductionWk.value = 1;
+        _submitCanvasManager.Species.value = 2;
+        _submitCanvasManager.DayDrop.value = 1;
+        _submitCanvasManager.MonthDrop.value = 1;
+        _submitCanvasManager.YearDrop.value = 1;
+        _submitCanvasManager.IceRectangle.value = 6;
+        _submitCanvasManager.SampleLocationName.value = 0;
+        Assert.IsTrue(_sampleValidator.ValidateValues());
     }
     [Test]
     public void SampleValidator_Value_Validator_Incorrect_Location_False()
     {
    
-        submitCanvasManager.Name.text = "Test Small Name";
-        submitCanvasManager.Company.text = "Test Small Company";
-        submitCanvasManager.Comments.text = "Test A Small Comment";
-        submitCanvasManager.ProductionWk.value = 1;
-        submitCanvasManager.Species.value = 2;
-        submitCanvasManager.DayDrop.value = 1;
-        submitCanvasManager.MonthDrop.value = 1;
-        submitCanvasManager.YearDrop.value = 1;
+        _submitCanvasManager.Name.text = "Test Small Name";
+        _submitCanvasManager.Company.text = "Test Small Company";
+        _submitCanvasManager.Comments.text = "Test A Small Comment";
+        _submitCanvasManager.ProductionWk.value = 1;
+        _submitCanvasManager.Species.value = 2;
+        _submitCanvasManager.DayDrop.value = 1;
+        _submitCanvasManager.MonthDrop.value = 1;
+        _submitCanvasManager.YearDrop.value = 1;
         //Validation will fail if one of the below values is not set to zero
         //Both the ices rectangle and sample location can not be set simultaneously
-        submitCanvasManager.IceRectangle.value = 6;
-        submitCanvasManager.SampleLocationName.value = 7;
-        Assert.IsFalse(sampleValidator.ValidateValues());
+        _submitCanvasManager.IceRectangle.value = 6;
+        _submitCanvasManager.SampleLocationName.value = 7;
+        Assert.IsFalse(_sampleValidator.ValidateValues());
 
     }
     [Test]
     public void SampleValidator_Value_Validator_Invalid_Date_False()
     {
 
-        submitCanvasManager.Name.text = "Test Small Name";
-        submitCanvasManager.Company.text = "Test Small Company";
-        submitCanvasManager.Comments.text = "Test A Small Comment";
-        submitCanvasManager.ProductionWk.value = 1;
-        submitCanvasManager.Species.value = 2;
+        _submitCanvasManager.Name.text = "Test Small Name";
+        _submitCanvasManager.Company.text = "Test Small Company";
+        _submitCanvasManager.Comments.text = "Test A Small Comment";
+        _submitCanvasManager.ProductionWk.value = 1;
+        _submitCanvasManager.Species.value = 2;
         //Validation will fail if the date is not set correctly
         //This includes the day,month and year drops
-        submitCanvasManager.DayDrop.value = 0;
-        submitCanvasManager.MonthDrop.value = 0;
-        submitCanvasManager.YearDrop.value = 0;
+        _submitCanvasManager.DayDrop.value = 0;
+        _submitCanvasManager.MonthDrop.value = 0;
+        _submitCanvasManager.YearDrop.value = 0;
  
-        submitCanvasManager.IceRectangle.value = 6;
-        submitCanvasManager.SampleLocationName.value = 0;
-        Assert.IsFalse(sampleValidator.ValidateValues());
+        _submitCanvasManager.IceRectangle.value = 6;
+        _submitCanvasManager.SampleLocationName.value = 0;
+        Assert.IsFalse(_sampleValidator.ValidateValues());
 
     }
     [Test]
     public void SubmitCanvasManager_SwitchCanvas()
     {
-        if (smallCanvas.activeInHierarchy)
+        if (_smallCanvas.activeInHierarchy)
         {
-            Assert.IsTrue(smallCanvas.activeInHierarchy);
-            Assert.IsFalse(largeCanvas.activeInHierarchy);
-            submitCanvasManager.SwitchCanvas();
-            Assert.IsFalse(smallCanvas.activeInHierarchy);
-            Assert.IsTrue(largeCanvas.activeInHierarchy);
+            Assert.IsTrue(_smallCanvas.activeInHierarchy);
+            Assert.IsFalse(_largeCanvas.activeInHierarchy);
+            _submitCanvasManager.SwitchCanvas();
+            Assert.IsFalse(_smallCanvas.activeInHierarchy);
+            Assert.IsTrue(_largeCanvas.activeInHierarchy);
         }
         else
         {
-            Assert.IsTrue(largeCanvas.activeInHierarchy);
-            Assert.IsFalse(smallCanvas.activeInHierarchy);
-            submitCanvasManager.SwitchCanvas();
-            Assert.IsFalse(largeCanvas.activeInHierarchy);
-            Assert.IsTrue(smallCanvas.activeInHierarchy);
+            Assert.IsTrue(_largeCanvas.activeInHierarchy);
+            Assert.IsFalse(_smallCanvas.activeInHierarchy);
+            _submitCanvasManager.SwitchCanvas();
+            Assert.IsFalse(_largeCanvas.activeInHierarchy);
+            Assert.IsTrue(_smallCanvas.activeInHierarchy);
         }
     }
   
     [Test]
     public void SubmitCanvasManager_TestInput_Generic()
     {
-        submitCanvasManager.Name.text = "Generic Name";
-        submitCanvasManager.Company.text = "Generic Company";
-        submitCanvasManager.Comments.text = "Generic Comments";
-        submitCanvasManager.Species.value = 2;
-        submitCanvasManager.IceRectangle.value = 3;
-        submitCanvasManager.ProductionWk.value = 4;
-        submitCanvasManager.DayDrop.value = 5;
-        submitCanvasManager.MonthDrop.value = 6;
-        submitCanvasManager.YearDrop.value = 7;
-        submitCanvasManager.SampleLocationName.value = 1;
-        Assert.AreEqual("Generic Name", submitCanvasManager.Name.text);
-        Assert.AreEqual("Generic Company", submitCanvasManager.Company.text);
-        Assert.AreEqual("Generic Comments", submitCanvasManager.Comments.text);
-        Assert.AreEqual(2, submitCanvasManager.Species.value);
-        Assert.AreEqual(3, submitCanvasManager.IceRectangle.value);
-        Assert.AreEqual(1, submitCanvasManager.SampleLocationName.value);
-        Assert.AreEqual(4, submitCanvasManager.ProductionWk.value);
-        Assert.AreEqual(5, submitCanvasManager.DayDrop.value);
-        Assert.AreEqual(6, submitCanvasManager.MonthDrop.value);
-        Assert.AreEqual(7, submitCanvasManager.YearDrop.value);
+        _submitCanvasManager.Name.text = "Generic Name";
+        _submitCanvasManager.Company.text = "Generic Company";
+        _submitCanvasManager.Comments.text = "Generic Comments";
+        _submitCanvasManager.Species.value = 2;
+        _submitCanvasManager.IceRectangle.value = 3;
+        _submitCanvasManager.ProductionWk.value = 4;
+        _submitCanvasManager.DayDrop.value = 5;
+        _submitCanvasManager.MonthDrop.value = 6;
+        _submitCanvasManager.YearDrop.value = 7;
+        _submitCanvasManager.SampleLocationName.value = 1;
+        Assert.AreEqual("Generic Name", _submitCanvasManager.Name.text);
+        Assert.AreEqual("Generic Company", _submitCanvasManager.Company.text);
+        Assert.AreEqual("Generic Comments", _submitCanvasManager.Comments.text);
+        Assert.AreEqual(2, _submitCanvasManager.Species.value);
+        Assert.AreEqual(3, _submitCanvasManager.IceRectangle.value);
+        Assert.AreEqual(1, _submitCanvasManager.SampleLocationName.value);
+        Assert.AreEqual(4, _submitCanvasManager.ProductionWk.value);
+        Assert.AreEqual(5, _submitCanvasManager.DayDrop.value);
+        Assert.AreEqual(6, _submitCanvasManager.MonthDrop.value);
+        Assert.AreEqual(7, _submitCanvasManager.YearDrop.value);
 
     }
     [Test]
@@ -182,29 +189,29 @@ public class SubmitCanvasManager_Validator_Tests
             Name = "Test Name1",
             Company = "Test Company1"
         });
-        submitCanvasManager.Name.text = "Generic Name";
-        submitCanvasManager.Company.text = "Generic Company";
-        submitCanvasManager.Comments.text = "Generic Comments";
-        submitCanvasManager.Species.value = 2;
-        submitCanvasManager.IceRectangle.value = 3;
-        submitCanvasManager.ProductionWk.value = 4;
-        submitCanvasManager.DayDrop.value = 5;
-        submitCanvasManager.MonthDrop.value = 6;
-        submitCanvasManager.YearDrop.value = 7;
-        submitCanvasManager.SampleLocationName.value = 1;
-        submitCanvasManager.CompleteSubmission();
+        _submitCanvasManager.Name.text = "Generic Name";
+        _submitCanvasManager.Company.text = "Generic Company";
+        _submitCanvasManager.Comments.text = "Generic Comments";
+        _submitCanvasManager.Species.value = 2;
+        _submitCanvasManager.IceRectangle.value = 3;
+        _submitCanvasManager.ProductionWk.value = 4;
+        _submitCanvasManager.DayDrop.value = 5;
+        _submitCanvasManager.MonthDrop.value = 6;
+        _submitCanvasManager.YearDrop.value = 7;
+        _submitCanvasManager.SampleLocationName.value = 1;
+        _submitCanvasManager.CompleteSubmission();
 
-        Assert.AreEqual("Test Name1", submitCanvasManager.Name.text);
-        Assert.AreEqual("Test Company1", submitCanvasManager.Company.text);
-        Assert.AreEqual("", submitCanvasManager.Comments.text);
-        Assert.AreEqual(0, submitCanvasManager.Species.value);
-        Assert.AreEqual(0, submitCanvasManager.IceRectangle.value);
-        Assert.AreEqual(0, submitCanvasManager.SampleLocationName.value);
-        Assert.AreEqual(0, submitCanvasManager.ProductionWk.value);
-        Assert.AreEqual(0, submitCanvasManager.DayDrop.value);
-        Assert.AreEqual(0, submitCanvasManager.MonthDrop.value);
-        Assert.AreEqual(0, submitCanvasManager.YearDrop.value);
-        Assert.IsTrue(submitCanvasManager.SubmissionPopUp.isActiveAndEnabled);
+        Assert.AreEqual("Test Name1", _submitCanvasManager.Name.text);
+        Assert.AreEqual("Test Company1", _submitCanvasManager.Company.text);
+        Assert.AreEqual("", _submitCanvasManager.Comments.text);
+        Assert.AreEqual(0, _submitCanvasManager.Species.value);
+        Assert.AreEqual(0, _submitCanvasManager.IceRectangle.value);
+        Assert.AreEqual(0, _submitCanvasManager.SampleLocationName.value);
+        Assert.AreEqual(0, _submitCanvasManager.ProductionWk.value);
+        Assert.AreEqual(0, _submitCanvasManager.DayDrop.value);
+        Assert.AreEqual(0, _submitCanvasManager.MonthDrop.value);
+        Assert.AreEqual(0, _submitCanvasManager.YearDrop.value);
+        Assert.IsTrue(_submitCanvasManager.SubmissionPopUp.isActiveAndEnabled);
 
     }
     [Test]
@@ -215,29 +222,29 @@ public class SubmitCanvasManager_Validator_Tests
             Name = "Test Name2",
             Company = "Test Company2"
         });
-        submitCanvasManager.Name.text = "Generic Name";
-        submitCanvasManager.Company.text = "Generic Company";
-        submitCanvasManager.Comments.text = "Generic Comments";
-        submitCanvasManager.Species.value = 2;
-        submitCanvasManager.IceRectangle.value = 3;
-        submitCanvasManager.ProductionWk.value = 4;
-        submitCanvasManager.DayDrop.value = 5;
-        submitCanvasManager.MonthDrop.value = 6;
-        submitCanvasManager.YearDrop.value = 7;
-        submitCanvasManager.SampleLocationName.value = 1;
-        submitCanvasManager.CompleteStore();
+        _submitCanvasManager.Name.text = "Generic Name";
+        _submitCanvasManager.Company.text = "Generic Company";
+        _submitCanvasManager.Comments.text = "Generic Comments";
+        _submitCanvasManager.Species.value = 2;
+        _submitCanvasManager.IceRectangle.value = 3;
+        _submitCanvasManager.ProductionWk.value = 4;
+        _submitCanvasManager.DayDrop.value = 5;
+        _submitCanvasManager.MonthDrop.value = 6;
+        _submitCanvasManager.YearDrop.value = 7;
+        _submitCanvasManager.SampleLocationName.value = 1;
+        _submitCanvasManager.CompleteStore();
 
-        Assert.AreEqual("Test Name2", submitCanvasManager.Name.text);
-        Assert.AreEqual("Test Company2", submitCanvasManager.Company.text);
-        Assert.AreEqual("", submitCanvasManager.Comments.text);
-        Assert.AreEqual(0, submitCanvasManager.Species.value);
-        Assert.AreEqual(0, submitCanvasManager.IceRectangle.value);
-        Assert.AreEqual(0, submitCanvasManager.SampleLocationName.value);
-        Assert.AreEqual(0, submitCanvasManager.ProductionWk.value);
-        Assert.AreEqual(0, submitCanvasManager.DayDrop.value);
-        Assert.AreEqual(0, submitCanvasManager.MonthDrop.value);
-        Assert.AreEqual(0, submitCanvasManager.YearDrop.value);
-        Assert.IsTrue(submitCanvasManager.SubmissionPopUp.isActiveAndEnabled);
+        Assert.AreEqual("Test Name2", _submitCanvasManager.Name.text);
+        Assert.AreEqual("Test Company2", _submitCanvasManager.Company.text);
+        Assert.AreEqual("", _submitCanvasManager.Comments.text);
+        Assert.AreEqual(0, _submitCanvasManager.Species.value);
+        Assert.AreEqual(0, _submitCanvasManager.IceRectangle.value);
+        Assert.AreEqual(0, _submitCanvasManager.SampleLocationName.value);
+        Assert.AreEqual(0, _submitCanvasManager.ProductionWk.value);
+        Assert.AreEqual(0, _submitCanvasManager.DayDrop.value);
+        Assert.AreEqual(0, _submitCanvasManager.MonthDrop.value);
+        Assert.AreEqual(0, _submitCanvasManager.YearDrop.value);
+        Assert.IsTrue(_submitCanvasManager.SubmissionPopUp.isActiveAndEnabled);
     }
     [Test]
     public void SubmitCanvasManager_CompleteSubmission()
@@ -247,19 +254,19 @@ public class SubmitCanvasManager_Validator_Tests
             Name = "Test Name",
             Company = "Test Company"
         });
-        submitCanvasManager.CompleteSubmission();
+        _submitCanvasManager.CompleteSubmission();
 
-        Assert.AreEqual("Test Name", submitCanvasManager.Name.text);
-        Assert.AreEqual("Test Company", submitCanvasManager.Company.text);
-        Assert.AreEqual("", submitCanvasManager.Comments.text);
-        Assert.AreEqual(0, submitCanvasManager.Species.value);
-        Assert.AreEqual(0, submitCanvasManager.IceRectangle.value);
-        Assert.AreEqual(0, submitCanvasManager.SampleLocationName.value);
-        Assert.AreEqual(0, submitCanvasManager.ProductionWk.value);
-        Assert.AreEqual(0, submitCanvasManager.DayDrop.value);
-        Assert.AreEqual(0, submitCanvasManager.MonthDrop.value);
-        Assert.AreEqual(0, submitCanvasManager.YearDrop.value);
-        Assert.IsTrue(submitCanvasManager.SubmissionPopUp.isActiveAndEnabled);
+        Assert.AreEqual("Test Name", _submitCanvasManager.Name.text);
+        Assert.AreEqual("Test Company", _submitCanvasManager.Company.text);
+        Assert.AreEqual("", _submitCanvasManager.Comments.text);
+        Assert.AreEqual(0, _submitCanvasManager.Species.value);
+        Assert.AreEqual(0, _submitCanvasManager.IceRectangle.value);
+        Assert.AreEqual(0, _submitCanvasManager.SampleLocationName.value);
+        Assert.AreEqual(0, _submitCanvasManager.ProductionWk.value);
+        Assert.AreEqual(0, _submitCanvasManager.DayDrop.value);
+        Assert.AreEqual(0, _submitCanvasManager.MonthDrop.value);
+        Assert.AreEqual(0, _submitCanvasManager.YearDrop.value);
+        Assert.IsTrue(_submitCanvasManager.SubmissionPopUp.isActiveAndEnabled);
     }
     [Test]
     public void SubmitCanvasManager_CompleteStore()
@@ -269,18 +276,18 @@ public class SubmitCanvasManager_Validator_Tests
             Name = "Test Name",
             Company = "Test Company"
         });
-        submitCanvasManager.CompleteStore();
-        Assert.AreEqual("Test Name", submitCanvasManager.Name.text);
-        Assert.AreEqual("Test Company", submitCanvasManager.Company.text);
-        Assert.AreEqual("", submitCanvasManager.Comments.text);
-        Assert.AreEqual(0, submitCanvasManager.Species.value);
-        Assert.AreEqual(0, submitCanvasManager.IceRectangle.value);
-        Assert.AreEqual(0, submitCanvasManager.SampleLocationName.value);
-        Assert.AreEqual(0, submitCanvasManager.ProductionWk.value);
-        Assert.AreEqual(0, submitCanvasManager.DayDrop.value);
-        Assert.AreEqual(0, submitCanvasManager.MonthDrop.value);
-        Assert.AreEqual(0, submitCanvasManager.YearDrop.value);
-        Assert.IsTrue(submitCanvasManager.SubmissionPopUp.isActiveAndEnabled);
+        _submitCanvasManager.CompleteStore();
+        Assert.AreEqual("Test Name", _submitCanvasManager.Name.text);
+        Assert.AreEqual("Test Company", _submitCanvasManager.Company.text);
+        Assert.AreEqual("", _submitCanvasManager.Comments.text);
+        Assert.AreEqual(0, _submitCanvasManager.Species.value);
+        Assert.AreEqual(0, _submitCanvasManager.IceRectangle.value);
+        Assert.AreEqual(0, _submitCanvasManager.SampleLocationName.value);
+        Assert.AreEqual(0, _submitCanvasManager.ProductionWk.value);
+        Assert.AreEqual(0, _submitCanvasManager.DayDrop.value);
+        Assert.AreEqual(0, _submitCanvasManager.MonthDrop.value);
+        Assert.AreEqual(0, _submitCanvasManager.YearDrop.value);
+        Assert.IsTrue(_submitCanvasManager.SubmissionPopUp.isActiveAndEnabled);
     }
    
 }
